@@ -20,7 +20,7 @@ public class GroupManager {
     }
 
     private boolean isInList(String groupName, String worldName, HashSet<String> groupList, HashSet<String> worldList) {
-        return groupList.contains(groupName) && worldList.contains(worldName);
+        return groupList.contains(groupName) && worldList.contains(worldName.toLowerCase());
     }
 
     public boolean isInDenyAll(String groupName, String worldName) {
