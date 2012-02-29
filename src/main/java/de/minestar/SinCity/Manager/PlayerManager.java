@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import de.minestar.SinCity.Units.SinCityPlayer;
+import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class PlayerManager {
 
@@ -13,6 +14,21 @@ public class PlayerManager {
 
     public PlayerManager() {
         this.updateAll();
+    }
+
+    // /////////////////////////////////////////////
+    //
+    // MISC METHODS
+    //
+    // /////////////////////////////////////////////
+
+    public void sendToOps(String message) {
+        Player[] players = Bukkit.getOnlinePlayers();
+        for (Player player : players) {
+            if (player.isOp()) {
+                ChatUtils.writeError(player, "[ SinCity ]", message);
+            }
+        }
     }
 
     // /////////////////////////////////////////////

@@ -7,10 +7,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+
 import de.minestar.SinCity.Manager.GroupManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Units.SinCityPlayer;
@@ -31,13 +32,24 @@ public class GriefListener implements Listener {
 
         // CHECK FOR DENIAL
         if (this.groupManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
-            ChatUtils.writeError(player, "[SinCity]", "Du kannst hier nicht abbauen.");
+            ChatUtils.writeError(player, "[ SinCity ]", "Du kannst hier nicht abbauen.");
             return true;
         }
 
         // CHECK FOR PARTIAL DENIAL
         if (this.groupManager.isInDenyPartial(thisPlayer.getGroup(), block.getWorld().getName())) {
-            ChatUtils.writeError(player, "[SinCity]", "Du kannst hier nicht abbauen.");
+            ChatUtils.writeError(player, "[ SinCity ]", "Du kannst hier nicht abbauen.");
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean denyInteractAction(Player player) {
+        SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
+
+        // CHECK FOR DENIAL
+        if (this.groupManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
             return true;
         }
 
@@ -85,16 +97,25 @@ public class GriefListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onEntityDamage(EntityDamageEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
             return;
-    }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        // EVENT IS CANCELLED? => RETURN
-        if (event.isCancelled())
-            return;
+        // UPDATE EVENT-STATE
+        if (event instanceof org.bukkit.event.entity.EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent thisEvent = (EntityDamageByEntityEvent) event;
+            if (thisEvent.getDamager() instanceof Player && thisEvent.getEntity() instanceof Player) {
+                Player attacker = (Player) thisEvent.getDamager();
+                Player defender = (Player) thisEvent.getEntity();
+                event.setCancelled(this.denyInteractAction(attacker));
+                // SEND MESSAGE, IF EVENT IS CANCELLED AND DEAL DAMAGE
+                if (event.isCancelled()) {
+                    attacker.damage(7);
+                    ChatUtils.writeError(attacker, "Nicht die Mama!");
+                    this.playerManager.sendToOps("'" + attacker.getName() + "' betreibt PVP an '" + defender.getName() + "'.");
+                }
+            }
+        }
     }
 }
