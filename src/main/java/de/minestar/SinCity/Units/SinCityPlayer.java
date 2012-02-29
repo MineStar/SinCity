@@ -15,7 +15,7 @@ public class SinCityPlayer {
     private long lastPlayed;
 
     public SinCityPlayer(Player player) {
-        this.playerName = player.getName();
+        this.playerName = player.getName().toLowerCase();
         this.update();
     }
 
@@ -29,7 +29,7 @@ public class SinCityPlayer {
         this.nickName = (player.getDisplayName() == null ? player.getName() : player.getDisplayName());
         this.listName = (player.getPlayerListName() == null ? player.getName() : player.getPlayerListName());
         this.lastPlayed = player.getLastPlayed();
-        this.group = UtilPermissions.getGroupName(player);
+        this.group = UtilPermissions.getGroupName(player).toLowerCase();
     }
 
     public String getPlayerName() {
