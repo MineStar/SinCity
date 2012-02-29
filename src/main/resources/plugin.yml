@@ -1,0 +1,22 @@
+name: SinCity
+main: de.minestar.SinCity.Core
+version: 0.50
+commands:
+  freeserver:
+    description: Change your nickname
+    usage: /<command> <Name>
+  ngclear:
+    description: Adds the protection.
+    usage: /<command>
+  ngadd:
+    description: Adds the protection.
+    usage: /<command>
+  ngdel:
+    description: Removes the protection.
+    usage: /<command>
+  nglist:
+    description: Lists the protection.
+    usage: /<command>    
+  ngregen:
+    description: Removes the protection.
+    usage: /<command>       
