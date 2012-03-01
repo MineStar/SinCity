@@ -45,6 +45,7 @@ public class RegenCommand extends AbstractCommand {
         for (int x = minChunk.getX(); x <= maxChunk.getX(); x++) {
             for (int z = minChunk.getZ(); z <= maxChunk.getZ(); z++) {
                 world.regenerateChunk(x, z);
+                world.getChunkAt(x, z).load(true);
                 chunkCount++;
             }
         }
