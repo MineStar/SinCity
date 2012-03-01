@@ -43,7 +43,7 @@ public class SelectListener implements Listener {
         return this.selections.get(player.getName());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
