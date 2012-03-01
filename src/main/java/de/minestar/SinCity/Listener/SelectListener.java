@@ -25,6 +25,24 @@ public class SelectListener implements Listener {
         this.selections = new HashMap<String, Selection>();
     }
 
+    public boolean toggleSelectMode(Player player) {
+        if (this.isInSelectMode(player)) {
+            this.inSelectMode.remove(player.getName());
+            return false;
+        } else {
+            this.inSelectMode.add(player.getName());
+            return true;
+        }
+    }
+
+    public boolean isInSelectMode(Player player) {
+        return this.inSelectMode.contains(player.getName());
+    }
+
+    public Selection getSelection(Player player) {
+        return this.selections.get(player.getName());
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent event) {
         // EVENT IS CANCELLED? => RETURN
@@ -40,7 +58,7 @@ public class SelectListener implements Listener {
             return;
 
         // IS PLAYER IN SELECTMODE?
-        if (!this.inSelectMode.contains(event.getPlayer().getName()))
+        if (!this.isInSelectMode(event.getPlayer()))
             return;
 
         // GET PLAYER

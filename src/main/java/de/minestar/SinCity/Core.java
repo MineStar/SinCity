@@ -1,8 +1,12 @@
 package de.minestar.SinCity;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.minestar.SinCity.Commands.RegenCommand;
+import de.minestar.SinCity.Commands.SelectCommand;
 import de.minestar.SinCity.Listener.AFKListener;
 import de.minestar.SinCity.Listener.ConnectionListener;
 import de.minestar.SinCity.Listener.GriefListener;
@@ -10,11 +14,18 @@ import de.minestar.SinCity.Listener.SelectListener;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Threads.AFKThread;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
+import de.minestar.minestarlibrary.commands.CommandList;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class Core extends JavaPlugin {
 
     public static String pluginName = "SinCity";
+
+    /**
+     * Commands
+     */
+    private CommandList commandList;
 
     /**
      * Manager
@@ -74,6 +85,13 @@ public class Core extends JavaPlugin {
     }
 
     private void createCommands() {
+        //@formatter:off
+        AbstractCommand[] commands = new AbstractCommand[] {
+                new SelectCommand("/ngselect", "", "sincity.select", this.selectListener),
+                new RegenCommand("/ngregen", "", "sincity.regen", this.selectListener)
+        };
+        //@formatter:on
+        this.commandList = new CommandList(commands);
     }
 
     private void registerEvents() {
@@ -89,5 +107,11 @@ public class Core extends JavaPlugin {
 
     private void startThreads() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.afkThread, 15 * 20, 15 * 20);
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        this.commandList.handleCommand(sender, label, args);
+        return true;
     }
 }
