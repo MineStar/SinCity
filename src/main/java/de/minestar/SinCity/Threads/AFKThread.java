@@ -3,6 +3,7 @@ package de.minestar.SinCity.Threads;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import de.minestar.SinCity.Core;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Units.SinCityPlayer;
@@ -26,9 +27,13 @@ public class AFKThread implements Runnable {
         for (Player player : players) {
             thisPlayer = this.playerManager.getPlayer(player);
             maxAFKTime = this.dataManager.getMaxAFKTime(thisPlayer.getGroup());
-            if (maxAFKTime >= 0 && thisPlayer.isAFK(player.getLocation(), maxAFKTime)) {
-                ConsoleUtils.printInfo("[ SinCity ]", "Kicked '" + thisPlayer.getPlayerName() + "' for beeing AFK!");
-                player.kickPlayer("Kicked beeing AFK!");
+            if (maxAFKTime >= 0 && !thisPlayer.hasMoved(player.getLocation())) {
+                if (thisPlayer.isTooLongAFK(maxAFKTime)) {
+                    ConsoleUtils.printInfo(Core.pluginName, "Kicked '" + player.getName() + "' for being AFK!");
+                    player.kickPlayer("Kicked being AFK!");
+                }
+            } else {
+                thisPlayer.setLastLocation(player.getLocation());
             }
         }
     }

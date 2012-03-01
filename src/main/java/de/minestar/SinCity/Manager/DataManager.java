@@ -81,8 +81,7 @@ public class DataManager {
                     String[] split = group.split(":");
                     if (split.length != 2)
                         continue;
-
-                    dataList.put(split[0], Long.valueOf(split[1]) * 1000);
+                    dataList.put(split[0].toLowerCase(), Long.valueOf(split[1]) * 60 * 1000);
                 }
             }
         } catch (Exception e) {

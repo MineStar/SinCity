@@ -34,6 +34,7 @@ public class SinCityPlayer {
         this.lastPlayed = player.getLastPlayed();
         this.group = UtilPermissions.getGroupName(player).toLowerCase();
         this.lastLocation = player.getLocation();
+        System.out.println(group);
         this.lastMovedTime = System.currentTimeMillis();
     }
 
@@ -57,10 +58,9 @@ public class SinCityPlayer {
         return lastPlayed;
     }
 
-    public boolean isAFK(Location location, long maxAFKTime) {
+    public boolean hasMoved(Location location) {
         if (location.getBlockX() == this.lastLocation.getBlockX() && location.getBlockY() == this.lastLocation.getBlockY() && location.getBlockZ() == this.lastLocation.getBlockZ() && location.getWorld().getName().equalsIgnoreCase(this.lastLocation.getWorld().getName())) {
-            if (System.currentTimeMillis() < this.lastMovedTime + maxAFKTime)
-                return true;
+            return false;
         }
         return true;
     }
@@ -72,5 +72,9 @@ public class SinCityPlayer {
     public void setLastLocation(Location lastLocation) {
         this.lastLocation = lastLocation;
         this.lastMovedTime = System.currentTimeMillis();
+    }
+
+    public boolean isTooLongAFK(long maxAFKTime) {
+        return (System.currentTimeMillis() - this.lastMovedTime >= maxAFKTime);
     }
 }
