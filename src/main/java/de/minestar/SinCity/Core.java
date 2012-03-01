@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.minestar.SinCity.Listener.AFKListener;
 import de.minestar.SinCity.Listener.ConnectionListener;
 import de.minestar.SinCity.Listener.GriefListener;
+import de.minestar.SinCity.Listener.SelectListener;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Threads.AFKThread;
@@ -32,6 +33,7 @@ public class Core extends JavaPlugin {
     private AFKListener afkListener;
     private GriefListener griefListener;
     private ConnectionListener connectionListener;
+    private SelectListener selectListener;
 
     @Override
     public void onDisable() {
@@ -68,6 +70,7 @@ public class Core extends JavaPlugin {
         this.afkListener = new AFKListener(this.playerManager);
         this.griefListener = new GriefListener(this.dataManager, this.playerManager);
         this.connectionListener = new ConnectionListener(this.playerManager);
+        this.selectListener = new SelectListener();
     }
 
     private void createCommands() {
@@ -77,6 +80,7 @@ public class Core extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(this.afkListener, this);
         Bukkit.getPluginManager().registerEvents(this.griefListener, this);
         Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
+        Bukkit.getPluginManager().registerEvents(this.selectListener, this);
     }
 
     private void createThreads() {
