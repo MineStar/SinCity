@@ -34,7 +34,6 @@ public class SinCityPlayer {
         this.lastPlayed = player.getLastPlayed();
         this.group = UtilPermissions.getGroupName(player).toLowerCase();
         this.lastLocation = player.getLocation();
-        System.out.println(group);
         this.lastMovedTime = System.currentTimeMillis();
     }
 
