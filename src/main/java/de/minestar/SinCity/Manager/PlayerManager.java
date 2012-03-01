@@ -37,6 +37,7 @@ public class PlayerManager {
             ChatUtils.writeError(player, Core.pluginName, message);
         }
     }
+
     // /////////////////////////////////////////////
     //
     // UPDATE ALL
