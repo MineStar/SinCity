@@ -84,6 +84,6 @@ public class Core extends JavaPlugin {
     }
 
     private void startThreads() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.afkThread, 10 * 20, 10 * 20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.afkThread, 15 * 20, 15 * 20);
     }
 }
