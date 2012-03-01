@@ -43,7 +43,7 @@ public class SelectListener implements Listener {
         return this.selections.get(player.getName());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
@@ -67,6 +67,9 @@ public class SelectListener implements Listener {
         // WE NEED AN WOOD-PICKAXE IN OUR HANDS
         if (player.getItemInHand() == null || player.getItemInHand().getTypeId() != Material.WOOD_PICKAXE.getId())
             return;
+
+        // CANCEL THE EVENT
+        event.setCancelled(true);
 
         // GET THE CURRENT SELECTION
         Selection thisSelection = this.selections.get(player.getName());
