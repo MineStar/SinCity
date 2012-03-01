@@ -1,5 +1,6 @@
 package de.minestar.SinCity.Units;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.UtilPermissions;
@@ -13,6 +14,8 @@ public class SinCityPlayer {
     private String listName;
     private String group;
     private long lastPlayed;
+    private Location lastLocation;
+    private long lastMovedTime;
 
     public SinCityPlayer(Player player) {
         this.playerName = player.getName().toLowerCase();
@@ -30,6 +33,8 @@ public class SinCityPlayer {
         this.listName = (player.getPlayerListName() == null ? player.getName() : player.getPlayerListName());
         this.lastPlayed = player.getLastPlayed();
         this.group = UtilPermissions.getGroupName(player).toLowerCase();
+        this.lastLocation = player.getLocation();
+        this.lastMovedTime = System.currentTimeMillis();
     }
 
     public String getPlayerName() {
@@ -50,5 +55,22 @@ public class SinCityPlayer {
 
     public long getLastPlayed() {
         return lastPlayed;
+    }
+
+    public boolean isAFK(Location location, long maxAFKTime) {
+        if (location.getBlockX() == this.lastLocation.getBlockX() && location.getBlockY() == this.lastLocation.getBlockY() && location.getBlockZ() == this.lastLocation.getBlockZ() && location.getWorld().getName().equalsIgnoreCase(this.lastLocation.getWorld().getName())) {
+            if (System.currentTimeMillis() < this.lastMovedTime + maxAFKTime)
+                return true;
+        }
+        return true;
+    }
+
+    public Location getLastLocation() {
+        return lastLocation;
+    }
+
+    public void setLastLocation(Location lastLocation) {
+        this.lastLocation = lastLocation;
+        this.lastMovedTime = System.currentTimeMillis();
     }
 }

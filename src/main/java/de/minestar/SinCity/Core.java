@@ -5,8 +5,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.minestar.SinCity.Listener.ConnectionListener;
 import de.minestar.SinCity.Listener.GriefListener;
-import de.minestar.SinCity.Manager.GroupManager;
+import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
+import de.minestar.SinCity.Threads.AFKThread;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class Core extends JavaPlugin {
@@ -16,8 +17,13 @@ public class Core extends JavaPlugin {
     /**
      * Manager
      */
-    private GroupManager groupManager;
+    private DataManager dataManager;
     private PlayerManager playerManager;
+
+    /**
+     * Threads
+     */
+    private AFKThread afkThread;
 
     /**
      * Listener
@@ -41,17 +47,23 @@ public class Core extends JavaPlugin {
         // REGISTER EVENTS
         this.registerEvents();
 
+        // CREATE THREADS
+        this.createThreads();
+
+        // START THREADS();
+        this.startThreads();
+
         // PRINT INFO
         ConsoleUtils.printInfo(pluginName, "Enabled v" + this.getDescription().getVersion() + "!");
     }
 
     private void createManager() {
-        this.groupManager = new GroupManager(this.getDataFolder());
+        this.dataManager = new DataManager(this.getDataFolder());
         this.playerManager = new PlayerManager();
     }
 
     private void createListener() {
-        this.griefListener = new GriefListener(this.groupManager, this.playerManager);
+        this.griefListener = new GriefListener(this.dataManager, this.playerManager);
         this.connectionListener = new ConnectionListener(this.playerManager);
     }
 
@@ -61,5 +73,13 @@ public class Core extends JavaPlugin {
     private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
         Bukkit.getPluginManager().registerEvents(this.griefListener, this);
+    }
+
+    private void createThreads() {
+        this.afkThread = new AFKThread(this.dataManager, this.playerManager);
+    }
+
+    private void startThreads() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.afkThread, 10 * 20, 10 * 20);
     }
 }

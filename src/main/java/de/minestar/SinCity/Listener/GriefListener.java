@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 
-import de.minestar.SinCity.Manager.GroupManager;
+import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Units.SinCityPlayer;
 import de.minestar.minestarlibrary.utils.ChatUtils;
@@ -20,10 +20,10 @@ import de.minestar.minestarlibrary.utils.ChatUtils;
 public class GriefListener implements Listener {
 
     private final PlayerManager playerManager;
-    private final GroupManager groupManager;
+    private final DataManager dataManager;
 
-    public GriefListener(GroupManager groupManager, PlayerManager playerManager) {
-        this.groupManager = groupManager;
+    public GriefListener(DataManager groupManager, PlayerManager playerManager) {
+        this.dataManager = groupManager;
         this.playerManager = playerManager;
     }
 
@@ -31,13 +31,13 @@ public class GriefListener implements Listener {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
         // CHECK FOR DENIAL
-        if (this.groupManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
+        if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
             ChatUtils.writeError(player, "[ SinCity ]", "Du kannst hier nicht abbauen.");
             return true;
         }
 
         // CHECK FOR PARTIAL DENIAL
-        if (this.groupManager.isInDenyPartial(thisPlayer.getGroup(), block.getWorld().getName())) {
+        if (this.dataManager.isInDenyPartial(thisPlayer.getGroup(), block.getWorld().getName())) {
             ChatUtils.writeError(player, "[ SinCity ]", "Du kannst hier nicht abbauen.");
             return true;
         }
@@ -49,7 +49,7 @@ public class GriefListener implements Listener {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
         // CHECK FOR DENIAL
-        if (this.groupManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
+        if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
             return true;
         }
 
