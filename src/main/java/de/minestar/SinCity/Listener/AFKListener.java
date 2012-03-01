@@ -22,6 +22,10 @@ public class AFKListener implements Listener {
         if (event.isCancelled())
             return;
 
+        // WE NEED TEXTS!
+        if (event.getMessage().length() < 1)
+            return;
+
         // UPDATE EVENT-STATE
         this.playerManager.getPlayer(event.getPlayer()).setLastLocation(event.getPlayer().getLocation());
     }
@@ -30,6 +34,10 @@ public class AFKListener implements Listener {
     public void onCommandPreProcess(PlayerCommandPreprocessEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
+            return;
+
+        // WE NEED TEXTS!
+        if (event.getMessage().length() < 1)
             return;
 
         // UPDATE EVENT-STATE
