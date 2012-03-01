@@ -22,8 +22,8 @@ public class GriefListener implements Listener {
     private final PlayerManager playerManager;
     private final DataManager dataManager;
 
-    public GriefListener(DataManager groupManager, PlayerManager playerManager) {
-        this.dataManager = groupManager;
+    public GriefListener(DataManager dataManager, PlayerManager playerManager) {
+        this.dataManager = dataManager;
         this.playerManager = playerManager;
     }
 

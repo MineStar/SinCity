@@ -3,6 +3,7 @@ package de.minestar.SinCity;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.minestar.SinCity.Listener.AFKListener;
 import de.minestar.SinCity.Listener.ConnectionListener;
 import de.minestar.SinCity.Listener.GriefListener;
 import de.minestar.SinCity.Manager.DataManager;
@@ -28,6 +29,7 @@ public class Core extends JavaPlugin {
     /**
      * Listener
      */
+    private AFKListener afkListener;
     private GriefListener griefListener;
     private ConnectionListener connectionListener;
 
@@ -63,6 +65,7 @@ public class Core extends JavaPlugin {
     }
 
     private void createListener() {
+        this.afkListener = new AFKListener(this.playerManager);
         this.griefListener = new GriefListener(this.dataManager, this.playerManager);
         this.connectionListener = new ConnectionListener(this.playerManager);
     }
@@ -71,8 +74,9 @@ public class Core extends JavaPlugin {
     }
 
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
+        Bukkit.getPluginManager().registerEvents(this.afkListener, this);
         Bukkit.getPluginManager().registerEvents(this.griefListener, this);
+        Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
     }
 
     private void createThreads() {
