@@ -1,7 +1,7 @@
 name: SinCity
 main: de.minestar.SinCity.Core
 version: 0.50
-depend: [FalseBookCore]
+depend: [FalseBookCore, MinestarCore]
 commands:
   ngselect:
     description: Toggle selectionmode

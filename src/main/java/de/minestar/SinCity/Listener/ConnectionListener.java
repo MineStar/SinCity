@@ -18,17 +18,17 @@ public class ConnectionListener implements Listener {
         this.playerManager = playerManager;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerJoin(PlayerJoinEvent event) {
         this.playerManager.addPlayer(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuit(PlayerQuitEvent event) {
         this.onPlayerDisconnect(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerKick(PlayerKickEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
