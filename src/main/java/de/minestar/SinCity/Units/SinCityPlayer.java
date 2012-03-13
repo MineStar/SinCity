@@ -41,10 +41,10 @@ public class SinCityPlayer {
     }
 
     public boolean hasMoved(Location location) {
-        if (location.getBlockX() == this.lastLocation.getBlockX() && location.getBlockY() == this.lastLocation.getBlockY() && location.getBlockZ() == this.lastLocation.getBlockZ() && location.getWorld().getName().equalsIgnoreCase(this.lastLocation.getWorld().getName())) {
-            return false;
+        if (location.getBlockX() != this.lastLocation.getBlockX() || location.getBlockY() != this.lastLocation.getBlockY() || location.getBlockZ() != this.lastLocation.getBlockZ() && !location.getWorld().getName().equalsIgnoreCase(this.lastLocation.getWorld().getName())) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Location getLastLocation() {

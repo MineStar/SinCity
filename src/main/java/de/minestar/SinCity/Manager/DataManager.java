@@ -23,6 +23,7 @@ public class DataManager {
     }
 
     public Long getMaxAFKTime(String groupName) {
+        groupName = groupName.toLowerCase();
         if (this.maxAFKTimes.containsKey(groupName))
             return this.maxAFKTimes.get(groupName);
         else
