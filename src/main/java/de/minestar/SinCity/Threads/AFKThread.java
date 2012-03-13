@@ -25,6 +25,8 @@ public class AFKThread implements Runnable {
         long maxAFKTime;
         SinCityPlayer thisPlayer;
         for (Player player : players) {
+            if (!player.isOnline() || player.isDead())
+                continue;
             thisPlayer = this.playerManager.getPlayer(player);
             maxAFKTime = this.dataManager.getMaxAFKTime(thisPlayer.getGroup());
             if (maxAFKTime >= 0 && !thisPlayer.hasMoved(player.getLocation())) {
