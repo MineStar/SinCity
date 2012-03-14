@@ -35,13 +35,13 @@ public class GriefListener implements Listener {
 
         // CHECK FOR DENIAL
         if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
-            ChatUtils.writeError(player, Core.pluginName, "Du kannst hier nicht abbauen.");
+            ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht abbauen.");
             return true;
         }
 
         // CHECK FOR PARTIAL DENIAL
         if (this.dataManager.isInDenyPartial(thisPlayer.getGroup(), block.getWorld().getName())) {
-            ChatUtils.writeError(player, Core.pluginName, "Du kannst hier nicht abbauen.");
+            ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht abbauen.");
             return true;
         }
 
@@ -67,7 +67,7 @@ public class GriefListener implements Listener {
             // CHECK BLOCK
             int ID = block.getTypeId();
             if (ID == Material.DIODE_BLOCK_OFF.getId() || ID == Material.DIODE_BLOCK_ON.getId() || ID == Material.CHEST.getId() || ID == Material.DISPENSER.getId() || ID == Material.FURNACE.getId() || ID == Material.BURNING_FURNACE.getId()) {
-                ChatUtils.writeError(player, Core.pluginName, "Du kannst hier nicht verändern.");
+                ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht verändern.");
                 return true;
             }
         }

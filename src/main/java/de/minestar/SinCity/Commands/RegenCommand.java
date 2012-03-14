@@ -25,13 +25,13 @@ public class RegenCommand extends AbstractCommand {
         Selection thisSelection = this.selectListener.getSelection(player);
         // WE NEED A SELECTION
         if (thisSelection == null) {
-            PlayerUtils.sendError(player, Core.pluginName, "You must make a selection first!");
+            PlayerUtils.sendError(player, Core.NAME, "You must make a selection first!");
             return;
         }
 
         // SELECTION MUST BE VALID
         if (!thisSelection.isValid()) {
-            PlayerUtils.sendError(player, Core.pluginName, "The current selection is not valid!");
+            PlayerUtils.sendError(player, Core.NAME, "The current selection is not valid!");
             PlayerUtils.sendInfo(player, "Left click = Corner 1");
             PlayerUtils.sendInfo(player, "Right click = Corner 2");
             return;
@@ -48,6 +48,6 @@ public class RegenCommand extends AbstractCommand {
                 chunkCount++;
             }
         }
-        PlayerUtils.sendSuccess(player, Core.pluginName, "Regenerated " + chunkCount + " chunks!");
+        PlayerUtils.sendSuccess(player, Core.NAME, "Regenerated " + chunkCount + " chunks!");
     }
 }

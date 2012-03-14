@@ -20,9 +20,9 @@ public class SelectCommand extends AbstractCommand {
     @Override
     public void execute(String[] args, Player player) {
         if (this.selectListener.toggleSelectMode(player)) {
-            PlayerUtils.sendInfo(player, Core.pluginName, "You are now in selectmode!");
+            PlayerUtils.sendInfo(player, Core.NAME, "You are now in selectmode!");
         } else {
-            PlayerUtils.sendInfo(player, Core.pluginName, "You are no longer in selectmode!");
+            PlayerUtils.sendInfo(player, Core.NAME, "You are no longer in selectmode!");
         }
     }
 }

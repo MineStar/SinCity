@@ -85,10 +85,10 @@ public class SelectListener implements Listener {
         // RIGHT-CLICK : Corner 2
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             thisSelection.setCorner1(event.getClickedBlock().getLocation());
-            PlayerUtils.sendSuccess(player, Core.pluginName, "Position 1 set.");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Position 1 set.");
         } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             thisSelection.setCorner2(event.getClickedBlock().getLocation());
-            PlayerUtils.sendSuccess(player, Core.pluginName, "Position 2 set.");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Position 2 set.");
         }
     }
 }

@@ -34,7 +34,7 @@ public class PlayerManager {
                 continue;
 
             player = offPlayer.getPlayer();
-            ChatUtils.writeError(player, Core.pluginName, message);
+            ChatUtils.writeError(player, Core.NAME, message);
         }
     }
 

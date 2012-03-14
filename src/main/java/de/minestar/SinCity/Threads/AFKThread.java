@@ -31,7 +31,7 @@ public class AFKThread implements Runnable {
             maxAFKTime = this.dataManager.getMaxAFKTime(thisPlayer.getGroup());
             if (maxAFKTime >= 0 && !thisPlayer.hasMoved(player.getLocation())) {
                 if (thisPlayer.isTooLongAFK(maxAFKTime)) {
-                    ConsoleUtils.printInfo(Core.pluginName, "Kicked '" + player.getName() + "' for being AFK!");
+                    ConsoleUtils.printInfo(Core.NAME, "Kicked '" + player.getName() + "' for being AFK!");
                     player.kickPlayer("Kicked being AFK!");
                 }
             } else {
