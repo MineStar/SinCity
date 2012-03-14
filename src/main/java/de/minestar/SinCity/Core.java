@@ -17,7 +17,6 @@ import de.minestar.SinCity.Threads.AFKThread;
 import de.minestar.minestarlibrary.AbstractCore;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.commands.CommandList;
-import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class Core extends AbstractCore {
 
@@ -47,12 +46,6 @@ public class Core extends AbstractCore {
 
     public Core(String name) {
         super(name);
-    }
-
-    @Override
-    public void onDisable() {
-        // PRINT INFO
-        ConsoleUtils.printInfo(Core.NAME, "Disabled v" + this.getDescription().getVersion() + "!");
     }
 
     @Override
