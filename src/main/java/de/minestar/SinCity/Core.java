@@ -20,6 +20,8 @@ import de.minestar.minestarlibrary.commands.CommandList;
 
 public class Core extends AbstractCore {
 
+    public static String NAME = "SinCity";
+
     /**
      * Manager
      */
