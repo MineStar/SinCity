@@ -9,6 +9,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.minestar.core.MinestarCore;
+import de.minestar.core.units.MinestarGroup;
 import de.minestar.core.units.MinestarPlayer;
 
 public class AdminListener implements Listener {
@@ -18,8 +19,9 @@ public class AdminListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         MinestarPlayer thisPlayer = MinestarCore.getPlayer(event.getEntity().getName());
-        if (thisPlayer.getGroup().equalsIgnoreCase("admins")) {
-            if (randomizer.nextFloat() <= 0.25) {
+        if (thisPlayer.getMinestarGroup().equals(MinestarGroup.ADMIN)) {
+            // 25 % Drop chance
+            if (randomizer.nextInt(4) == 0) {
                 ItemStack bedrockStack = new ItemStack(Material.BEDROCK.getId());
                 bedrockStack.setAmount(1);
                 event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), bedrockStack);
