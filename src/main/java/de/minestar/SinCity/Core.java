@@ -1,6 +1,5 @@
 package de.minestar.SinCity;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -15,7 +14,6 @@ import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Threads.AFKThread;
 import de.minestar.minestarlibrary.AbstractCore;
-import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.commands.CommandList;
 
 public class Core extends AbstractCore {
@@ -70,12 +68,12 @@ public class Core extends AbstractCore {
     @Override
     public boolean createCommands() {
         //@formatter:off
-        AbstractCommand[] commands = new AbstractCommand[] {
-                new SelectCommand("/ngselect", "", "sincity.select", this.selectListener),
-                new RegenCommand("/ngregen", "", "sincity.regen", this.selectListener)
-        };
+        this.cmdList = new CommandList(NAME,
+
+                new SelectCommand           ("/ngselect",   "",     "sincity.select",   this.selectListener),
+                new RegenCommand            ("/ngregen",    "",     "sincity.regen",    this.selectListener)
+        );
         //@formatter:on
-        this.cmdList = new CommandList(Core.NAME, commands);
         return true;
     }
 
@@ -87,11 +85,11 @@ public class Core extends AbstractCore {
 
     @Override
     protected boolean registerEvents(PluginManager pm) {
-        Bukkit.getPluginManager().registerEvents(this.afkListener, this);
-        Bukkit.getPluginManager().registerEvents(this.adminListener, this);
-        Bukkit.getPluginManager().registerEvents(this.griefListener, this);
-        Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
-        Bukkit.getPluginManager().registerEvents(this.selectListener, this);
+        pm.registerEvents(this.afkListener, this);
+        pm.registerEvents(this.adminListener, this);
+        pm.registerEvents(this.griefListener, this);
+        pm.registerEvents(this.connectionListener, this);
+        pm.registerEvents(this.selectListener, this);
         return true;
     }
 
