@@ -3,7 +3,7 @@ package de.minestar.SinCity.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import de.minestar.SinCity.Manager.PlayerManager;
@@ -17,7 +17,7 @@ public class AFKListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerChat(PlayerChatEvent event) {
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
             return;
