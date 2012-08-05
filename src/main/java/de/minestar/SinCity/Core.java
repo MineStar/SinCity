@@ -9,6 +9,7 @@ import de.minestar.SinCity.Listener.AFKListener;
 import de.minestar.SinCity.Listener.AdminListener;
 import de.minestar.SinCity.Listener.ConnectionListener;
 import de.minestar.SinCity.Listener.GriefListener;
+import de.minestar.SinCity.Listener.PistonListener;
 import de.minestar.SinCity.Listener.SelectListener;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
@@ -39,6 +40,7 @@ public class Core extends AbstractCore {
     private GriefListener griefListener;
     private ConnectionListener connectionListener;
     private SelectListener selectListener;
+    private PistonListener pistonListener;
 
     public Core() {
         this("SinCity");
@@ -62,6 +64,7 @@ public class Core extends AbstractCore {
         this.griefListener = new GriefListener(this.dataManager, this.playerManager);
         this.connectionListener = new ConnectionListener(this.playerManager);
         this.selectListener = new SelectListener();
+        this.pistonListener = new PistonListener();
         return true;
     }
 
@@ -69,7 +72,6 @@ public class Core extends AbstractCore {
     public boolean createCommands() {
         //@formatter:off
         this.cmdList = new CommandList(NAME,
-
                 new SelectCommand           ("/ngselect",   "",     "sincity.select",   this.selectListener),
                 new RegenCommand            ("/ngregen",    "",     "sincity.regen",    this.selectListener)
         );
@@ -90,6 +92,7 @@ public class Core extends AbstractCore {
         pm.registerEvents(this.griefListener, this);
         pm.registerEvents(this.connectionListener, this);
         pm.registerEvents(this.selectListener, this);
+        pm.registerEvents(this.pistonListener, this);
         return true;
     }
 
