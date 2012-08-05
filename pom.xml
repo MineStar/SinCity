@@ -5,6 +5,20 @@
 	<artifactId>SinCity</artifactId>
 	<version>1.4-SNAPSHOT</version>
 	<name>SinCity</name>
+	<distributionManagement>
+		<!-- use the following if you're not using a snapshot version. -->
+		<repository>
+			<id>nexus</id>
+			<name>RepositoryProxy</name>
+			<url>http://server2.minestar.de:8081/nexus/content/repositories/releases</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>RepositoryProxy</name>
+			<url>http://server2.minestar.de:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<resources>
 			<resource>
