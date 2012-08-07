@@ -2,6 +2,7 @@ package de.minestar.SinCity.Listener;
 
 import java.util.Random;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +20,7 @@ public class AdminListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         MinestarPlayer thisPlayer = MinestarCore.getPlayer(event.getEntity().getName());
-        if (thisPlayer.getMinestarGroup().equals(MinestarGroup.ADMIN)) {
+        if (thisPlayer.getMinestarGroup().equals(MinestarGroup.ADMIN) && event.getEntity().getGameMode() != GameMode.ADVENTURE) {
             // 25 % Drop chance
             if (randomizer.nextInt(4) == 0) {
                 ItemStack bedrockStack = new ItemStack(Material.BEDROCK.getId());
