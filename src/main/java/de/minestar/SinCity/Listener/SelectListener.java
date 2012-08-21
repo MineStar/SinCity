@@ -3,6 +3,7 @@ package de.minestar.SinCity.Listener;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.minestar.SinCity.Core;
+import de.minestar.SinCity.Units.BiomeData;
+import de.minestar.SinCity.Units.BiomeHelper;
 import de.minestar.SinCity.Units.Selection;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
@@ -20,9 +23,24 @@ public class SelectListener implements Listener {
     private final HashSet<String> inSelectMode;
     private final HashMap<String, Selection> selections;
 
+    private final HashMap<String, BiomeData> biomes;
+
     public SelectListener() {
         this.inSelectMode = new HashSet<String>();
         this.selections = new HashMap<String, Selection>();
+        this.biomes = new HashMap<String, BiomeData>();
+    }
+
+    public void setBiomeData(String playerName, BiomeData data) {
+        this.biomes.put(playerName, data);
+    }
+
+    public void removeBiomeData(String playerName) {
+        this.biomes.remove(playerName);
+    }
+
+    public BiomeData getBiomeData(String playerName) {
+        return this.biomes.get(playerName);
     }
 
     public boolean toggleSelectMode(Player player) {
@@ -45,6 +63,20 @@ public class SelectListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEvent event) {
+
+        BiomeData data = this.getBiomeData(event.getPlayer().getName());
+        if (data != null && event.getPlayer().isOp()) {
+            HashSet<Byte> hashset = new HashSet<Byte>();
+            hashset.add((byte) 0);
+            Location location = event.getPlayer().getLineOfSight(hashset, 200).get(0).getLocation();
+            if (location != null) {
+                BiomeHelper.convertBiome(event.getPlayer(), location, data.getBiome(), data.getRadius());
+            } else {
+                PlayerUtils.sendBlankMessage(event.getPlayer(), "No target in sight!");
+            }
+            return;
+        }
+
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
             return;

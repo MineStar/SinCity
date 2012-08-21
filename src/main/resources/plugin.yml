@@ -8,4 +8,7 @@ commands:
     usage: /ngselect    
   ngregen:
     description: Regenerates the selected chunks
-    usage: /ngregen     
+    usage: /ngregen
+  ngbiome:
+    description: Set the biome
+    usage: /ngbiome    

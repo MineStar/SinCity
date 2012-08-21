@@ -3,6 +3,7 @@ package de.minestar.SinCity;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import de.minestar.SinCity.Commands.BiomeCommand;
 import de.minestar.SinCity.Commands.RegenCommand;
 import de.minestar.SinCity.Commands.SelectCommand;
 import de.minestar.SinCity.Listener.AFKListener;
@@ -73,7 +74,8 @@ public class Core extends AbstractCore {
         //@formatter:off
         this.cmdList = new CommandList(NAME,
                 new SelectCommand           ("/ngselect",   "",     "sincity.select",   this.selectListener),
-                new RegenCommand            ("/ngregen",    "",     "sincity.regen",    this.selectListener)
+                new RegenCommand            ("/ngregen",    "",     "sincity.regen",    this.selectListener),
+                new BiomeCommand            ("/ngbiome",    "<BIOME> <RADIUS>",     "sincity.setbiome",    this.selectListener)
         );
         //@formatter:on
         return true;
