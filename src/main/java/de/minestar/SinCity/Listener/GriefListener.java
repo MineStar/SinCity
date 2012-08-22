@@ -2,6 +2,7 @@ package de.minestar.SinCity.Listener;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -9,10 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.Vector;
 
 import de.minestar.SinCity.Core;
 import de.minestar.SinCity.Manager.DataManager;
@@ -130,23 +131,33 @@ public class GriefListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDamage(EntityDamageEvent event) {
+    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
         // EVENT IS CANCELLED? => RETURN
         if (event.isCancelled())
             return;
 
         // UPDATE EVENT-STATE
-        if (event instanceof org.bukkit.event.entity.EntityDamageByEntityEvent) {
-            EntityDamageByEntityEvent thisEvent = (EntityDamageByEntityEvent) event;
-            if (thisEvent.getDamager() instanceof Player && thisEvent.getEntity() instanceof Player) {
-                Player attacker = (Player) thisEvent.getDamager();
-                Player defender = (Player) thisEvent.getEntity();
-                event.setCancelled(this.denyPlayerDamage(attacker));
+        if (event.getDamager().getType().equals(EntityType.PLAYER)) {
+            Player attacker = (Player) event.getDamager();
+            // ATTACKING PLAYER?
+            if (event.getEntity().getType().equals(EntityType.PLAYER)) {
+                Player defender = (Player) event.getEntity();
                 // SEND MESSAGE, IF EVENT IS CANCELLED AND DEAL DAMAGE
-                if (event.isCancelled()) {
+                if (this.denyPlayerDamage(attacker)) {
                     attacker.damage(7);
+                    event.setCancelled(true);
                     ChatUtils.writeError(attacker, "Nicht die Mama!");
                     this.playerManager.sendToOps("'" + attacker.getName() + "' betreibt PVP an '" + defender.getName() + "'.");
+                }
+            } else {
+                if (event.getEntity().getType().equals(EntityType.COW) || event.getEntity().getType().equals(EntityType.CHICKEN) || event.getEntity().getType().equals(EntityType.SHEEP) || event.getEntity().getType().equals(EntityType.IRON_GOLEM) || event.getEntity().getType().equals(EntityType.MUSHROOM_COW) || event.getEntity().getType().equals(EntityType.OCELOT) || event.getEntity().getType().equals(EntityType.SNOWMAN) || event.getEntity().getType().equals(EntityType.PIG) || event.getEntity().getType().equals(EntityType.VILLAGER) || event.getEntity().getType().equals(EntityType.WOLF)) {
+                    if (this.denyPlayerDamage(attacker)) {
+                        attacker.damage(7);
+                        attacker.setVelocity(new Vector(0, 5, 0));
+                        event.setCancelled(true);
+                        ChatUtils.writeError(attacker, "Eine wilde Faaaaaahhhhrrrrrttt.....");
+                        this.playerManager.sendToOps("'" + attacker.getName() + "' betreibt PVP an '" + event.getEntity().getType().name() + "'.");
+                    }
                 }
             }
         }
