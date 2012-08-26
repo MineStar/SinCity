@@ -10,9 +10,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.util.Vector;
 
 import de.minestar.SinCity.Core;
@@ -49,6 +53,31 @@ public class GriefListener implements Listener {
         return false;
     }
 
+    @EventHandler
+    public void onItemPickup(PlayerPickupItemEvent event) {
+        Player player = event.getPlayer();
+        InventoryView inventoryView = player.getOpenInventory();
+        if (inventoryView != null) {
+            if (inventoryView.getType().equals(InventoryType.MERCHANT)) {
+                event.setCancelled(true);
+                return;
+            }
+            Inventory inventory = inventoryView.getTopInventory();
+            if (inventory != null) {
+                if (inventory.getType().equals(InventoryType.MERCHANT)) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+            inventory = inventoryView.getBottomInventory();
+            if (inventory != null) {
+                if (inventory.getType().equals(InventoryType.MERCHANT)) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+    }
     private boolean denyPlayerDamage(Player player) {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
