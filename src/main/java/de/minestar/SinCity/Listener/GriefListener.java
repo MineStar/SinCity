@@ -160,6 +160,8 @@ public class GriefListener implements Listener {
                     }
                 }
             }
+        } else if (event.getDamager().getType().equals(EntityType.VILLAGER)) {
+            event.setCancelled(true);
         }
     }
 }
