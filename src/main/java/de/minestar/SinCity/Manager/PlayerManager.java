@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import com.bukkit.gemo.utils.UtilPermissions;
+
 import de.minestar.SinCity.Core;
 import de.minestar.SinCity.Units.SinCityPlayer;
 import de.minestar.minestarlibrary.utils.ChatUtils;
@@ -26,14 +28,12 @@ public class PlayerManager {
     // /////////////////////////////////////////////
 
     public void sendToOps(String message) {
-        Set<OfflinePlayer> players = Bukkit.getOperators();
-        Player player;
-        for (OfflinePlayer offPlayer : players) {
+        Player[] players = Bukkit.getOnlinePlayers();
+        for (Player player : players) {
             // ONLY ONLINE
-            if (!offPlayer.isOnline())
+            if (!UtilPermissions.playerCanUseCommand(player, "sincity.isAdmin"))
                 continue;
 
-            player = offPlayer.getPlayer();
             ChatUtils.writeError(player, Core.NAME, message);
         }
     }
