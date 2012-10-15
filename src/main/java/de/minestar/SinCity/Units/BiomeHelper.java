@@ -79,6 +79,17 @@ public class BiomeHelper {
 
     private static void setBiome(Block block, Biome biome, Player player) {
         block.getWorld().setBiome(block.getX(), block.getZ(), biome);
+        Block highest = block.getWorld().getHighestBlockAt(block.getX(), block.getZ());
+        if (highest.getType().equals(Material.ICE)) {
+            highest.setType(Material.STATIONARY_WATER);
+        } else if (highest.getType().equals(Material.SNOW)) {
+            highest.setType(Material.AIR);
+        } else if (highest.getType().equals(Material.SAND) && (block.getBiome().equals(Biome.DESERT) || block.getBiome().equals(Biome.DESERT_HILLS))) {
+            highest.setType(Material.GRASS);
+            highest.getRelative(0, -1, 0).setType(Material.GRASS);
+            highest.getRelative(0, -2, 0).setType(Material.GRASS);
+            highest.getRelative(0, -3, 0).setType(Material.GRASS);
+        }
         player.sendBlockChange(block.getRelative(0, -5, 0).getLocation(), Material.GLASS.getId(), (byte) 0);
     }
 }
