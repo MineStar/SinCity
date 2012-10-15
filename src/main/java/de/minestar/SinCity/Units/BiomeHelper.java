@@ -84,7 +84,7 @@ public class BiomeHelper {
             highest.setType(Material.STATIONARY_WATER);
         } else if (highest.getType().equals(Material.SNOW)) {
             highest.setType(Material.AIR);
-        } else if (highest.getType().equals(Material.SAND) && (block.getBiome().equals(Biome.DESERT) || block.getBiome().equals(Biome.DESERT_HILLS))) {
+        } else if (highest.getType().equals(Material.SAND) && (!biome.equals(Biome.DESERT_HILLS) && !biome.equals(Biome.DESERT) && (block.getBiome().equals(Biome.DESERT) || block.getBiome().equals(Biome.DESERT_HILLS)))) {
             highest.setType(Material.GRASS);
             highest.getRelative(0, -1, 0).setType(Material.GRASS);
             highest.getRelative(0, -2, 0).setType(Material.GRASS);
