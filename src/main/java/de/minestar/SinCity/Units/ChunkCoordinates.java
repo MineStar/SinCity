@@ -21,4 +21,11 @@ public class ChunkCoordinates {
     public int getZ() {
         return z;
     }
+
+    @Override
+    public int hashCode() {
+        long bits = java.lang.Double.doubleToLongBits(getX());
+        bits ^= java.lang.Double.doubleToLongBits(getZ()) * 31;
+        return (((int) bits) ^ ((int) (bits >> 32)));
+    }
 }

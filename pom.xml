@@ -1,9 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.minestar</groupId>
 	<artifactId>SinCity</artifactId>
-	<version>1.4.6_1</version>
 	<name>SinCity</name>
 	<distributionManagement>
 		<!-- use the following if you're not using a snapshot version. -->
@@ -50,4 +48,10 @@
 			<version>1.4.6_1</version>
 		</dependency>
 	</dependencies>
+	<parent>
+		<groupId>de.minestar</groupId>
+		<artifactId>MinestarPlugins</artifactId>
+		<version>1.4.6_1</version>
+		<relativePath>../MinestarPlugins</relativePath>
+	</parent>
 </project>

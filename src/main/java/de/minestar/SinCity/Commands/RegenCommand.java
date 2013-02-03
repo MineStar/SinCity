@@ -37,17 +37,20 @@ public class RegenCommand extends AbstractCommand {
             return;
         }
 
-        // FINALLY REGENERATE THE CHUNKS
+        // init vars
         ChunkCoordinates minChunk = thisSelection.getChunkOfCorner1();
         ChunkCoordinates maxChunk = thisSelection.getChunkOfCorner2();
         World world = thisSelection.getCorner1().getWorld();
         int chunkCount = 0;
+
+        // REGENERATE THE CHUNKS
         for (int x = minChunk.getX(); x <= maxChunk.getX(); x++) {
             for (int z = minChunk.getZ(); z <= maxChunk.getZ(); z++) {
                 world.regenerateChunk(x, z);
                 chunkCount++;
             }
         }
+
         PlayerUtils.sendSuccess(player, Core.NAME, "Regenerated " + chunkCount + " chunks!");
     }
 }

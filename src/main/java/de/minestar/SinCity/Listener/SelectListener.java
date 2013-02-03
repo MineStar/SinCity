@@ -5,6 +5,8 @@ import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -95,6 +97,30 @@ public class SelectListener implements Listener {
 
         // GET PLAYER
         Player player = event.getPlayer();
+
+        // WE NEED AN WOOD-PICKAXE IN OUR HANDS
+        if (player.getItemInHand() != null && player.getItemInHand().getTypeId() == Material.STICK.getId() && player.isOp()) {
+            if (event.getClickedBlock() != null && event.getClickedBlock().getTypeId() == Material.MOB_SPAWNER.getId()) {
+                CreatureSpawner spawner = (CreatureSpawner) event.getClickedBlock().getState();
+                EntityType current = spawner.getSpawnedType();
+                int next = current.ordinal();
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    next++;
+                } else {
+                    next--;
+                }
+                if (next >= EntityType.values().length) {
+                    next = 0;
+                }
+                if (next < 0) {
+                    next = EntityType.values().length - 1;
+                }
+
+                spawner.setSpawnedType(EntityType.values()[next]);
+                player.sendMessage("Set Mobtype to: " + EntityType.values()[next]);
+                return;
+            }
+        }
 
         // WE NEED AN WOOD-PICKAXE IN OUR HANDS
         if (player.getItemInHand() == null || player.getItemInHand().getTypeId() != Material.WOOD_PICKAXE.getId())

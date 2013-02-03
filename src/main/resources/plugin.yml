@@ -9,6 +9,9 @@ commands:
   ngregen:
     description: Regenerates the selected chunks
     usage: /ngregen
+  ngpartregen:
+    description: Regenerates the selected blocks
+    usage: /ngregen
   ngbiome:
     description: Set the biome
     usage: /ngbiome    
