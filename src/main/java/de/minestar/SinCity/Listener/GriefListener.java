@@ -174,7 +174,7 @@ public class GriefListener implements Listener {
                 Player defender = (Player) event.getEntity();
                 // SEND MESSAGE, IF EVENT IS CANCELLED AND DEAL DAMAGE
                 if (this.denyPlayerDamage(attacker)) {
-                    attacker.damage(7);
+                    attacker.damage(7.0);
                     event.setCancelled(true);
                     ChatUtils.writeError(attacker, "Nicht die Mama!");
                     this.playerManager.sendToOps("'" + attacker.getName() + "' betreibt PVP an '" + defender.getName() + "'.");
@@ -186,7 +186,7 @@ public class GriefListener implements Listener {
                     return;
                 } else if (event.getEntity().getType().equals(EntityType.COW) || event.getEntity().getType().equals(EntityType.CHICKEN) || event.getEntity().getType().equals(EntityType.SHEEP) || event.getEntity().getType().equals(EntityType.IRON_GOLEM) || event.getEntity().getType().equals(EntityType.MUSHROOM_COW) || event.getEntity().getType().equals(EntityType.OCELOT) || event.getEntity().getType().equals(EntityType.SNOWMAN) || event.getEntity().getType().equals(EntityType.PIG) || event.getEntity().getType().equals(EntityType.VILLAGER) || event.getEntity().getType().equals(EntityType.WOLF)) {
                     if (this.denyPlayerDamage(attacker)) {
-                        attacker.damage(7);
+                        attacker.damage(7.0);
                         attacker.setVelocity(new Vector(0, 5, 0));
                         event.setCancelled(true);
                         ChatUtils.writeError(attacker, "Eine wilde Faaaaaahhhhrrrrrttt.....");
