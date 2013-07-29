@@ -40,7 +40,7 @@ public class SkullBlock implements ISpecialBlock {
         Skull skull = (Skull) block.getState();
         this.type = skull.getSkullType();
     }
-    
+
     @Override
     public void paste(World world) {
         Block block = world.getBlockAt(x, y, z);

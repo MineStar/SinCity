@@ -14,4 +14,17 @@ commands:
     usage: /ngregen
   ngbiome:
     description: Set the biome
-    usage: /ngbiome    
+    usage: /ngbiome     
+  ngaddcorner:
+    description: Add a corner
+    usage: /ngaddcorner
+  ngsavearea:
+    description: Save the area
+    usage: /ngsavearea
+  ngcleararea:
+    description: Clear the selection
+    usage: /ngcleararea
+  ngdeletearea:
+    description: Delete the area
+    usage: /ngdeletearea    
+    

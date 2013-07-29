@@ -27,6 +27,6 @@ public class AdminListener implements Listener {
                 bedrockStack.setAmount(1);
                 event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), bedrockStack);
             }
-        }        
+        }
     }
 }

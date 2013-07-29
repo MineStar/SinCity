@@ -1,5 +1,7 @@
 package de.minestar.SinCity.Listener;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -15,6 +17,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import de.minestar.SinCity.Core;
+import de.minestar.SinCity.Manager.AreaManager;
 import de.minestar.SinCity.Units.BiomeData;
 import de.minestar.SinCity.Units.BiomeHelper;
 import de.minestar.SinCity.Units.Selection;
@@ -26,11 +29,16 @@ public class SelectListener implements Listener {
     private final HashMap<String, Selection> selections;
 
     private final HashMap<String, BiomeData> biomes;
+    private final HashMap<String, ArrayList<Point>> areaList;
 
-    public SelectListener() {
+    private final AreaManager areaManager;
+
+    public SelectListener(AreaManager areaManager) {
         this.inSelectMode = new HashSet<String>();
         this.selections = new HashMap<String, Selection>();
         this.biomes = new HashMap<String, BiomeData>();
+        this.areaList = new HashMap<String, ArrayList<Point>>();
+        this.areaManager = areaManager;
     }
 
     public void setBiomeData(String playerName, BiomeData data) {
@@ -148,5 +156,32 @@ public class SelectListener implements Listener {
             thisSelection.setCorner2(event.getClickedBlock().getLocation());
             PlayerUtils.sendSuccess(player, Core.NAME, "Position 2 set.");
         }
+    }
+
+    public void clearAreaCorners(Player player) {
+        this.areaList.remove(player.getName());
+    }
+
+    public int addAreaCorner(Player player, int x, int y) {
+        ArrayList<Point> pointList = this.areaList.get(player.getName());
+        if (pointList == null) {
+            pointList = new ArrayList<Point>();
+            this.areaList.put(player.getName(), pointList);
+        }
+        pointList.add(new Point(x, y));
+        return pointList.size() + 1;
+    }
+
+    public boolean saveArea(Player player, String areaName) {
+        ArrayList<Point> pointList = this.areaList.get(player.getName());
+        return this.areaManager.addArea(player.getWorld().getName(), areaName, pointList);
+    }
+
+    public boolean deleteArea(String areaName) {
+        return this.areaManager.deleteArea(areaName);
+    }
+
+    public void listAreas(Player player) {
+        this.areaManager.listAreas(player);
     }
 }

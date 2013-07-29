@@ -20,6 +20,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.util.Vector;
 
 import de.minestar.SinCity.Core;
+import de.minestar.SinCity.Manager.AreaManager;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Units.SinCityPlayer;
@@ -29,23 +30,27 @@ public class GriefListener implements Listener {
 
     private final PlayerManager playerManager;
     private final DataManager dataManager;
+    private final AreaManager areaManager;
 
-    public GriefListener(DataManager dataManager, PlayerManager playerManager) {
+    public GriefListener(DataManager dataManager, PlayerManager playerManager, AreaManager areaManager) {
         this.dataManager = dataManager;
         this.playerManager = playerManager;
+        this.areaManager = areaManager;
     }
 
     private boolean denyBlockAction(Player player, Block block) {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
+        boolean insideArea = this.areaManager.isInside(block.getWorld().getName(), block.getX(), block.getZ());
+
         // CHECK FOR DENIAL
-        if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
+        if (!insideArea && this.dataManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
             ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht abbauen.");
             return true;
         }
 
         // CHECK FOR PARTIAL DENIAL
-        if (this.dataManager.isInDenyPartial(thisPlayer.getGroup(), block.getWorld().getName())) {
+        if (!insideArea && this.dataManager.isInDenyPartial(thisPlayer.getGroup(), block.getWorld().getName())) {
             ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht abbauen.");
             return true;
         }
@@ -93,8 +98,10 @@ public class GriefListener implements Listener {
     private boolean denySpecialInteractAction(Player player, Block block) {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
+        boolean insideArea = this.areaManager.isInside(block.getWorld().getName(), block.getX(), block.getZ());
+
         // CHECK FOR DENIAL
-        if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
+        if (!insideArea && this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
             // CHECK BLOCK
             int ID = block.getTypeId();
             if (ID == Material.DIODE_BLOCK_OFF.getId() || ID == Material.DIODE_BLOCK_ON.getId() || ID == Material.CHEST.getId() || ID == Material.DISPENSER.getId() || ID == Material.FURNACE.getId() || ID == Material.BURNING_FURNACE.getId()) {
