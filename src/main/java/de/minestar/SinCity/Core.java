@@ -23,6 +23,7 @@ import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Threads.AFKThread;
 import de.minestar.minestarlibrary.AbstractCore;
 import de.minestar.minestarlibrary.commands.CommandList;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class Core extends AbstractCore {
 
@@ -63,7 +64,8 @@ public class Core extends AbstractCore {
         this.dataManager = new DataManager(this.getDataFolder());
         this.playerManager = new PlayerManager();
         this.areaManager = new AreaManager(this);
-        this.areaManager.loadAreas();
+        int loadedAreas = this.areaManager.loadAreas();
+        ConsoleUtils.printInfo(NAME, "Areas loaded: " + loadedAreas);
         return true;
     }
 

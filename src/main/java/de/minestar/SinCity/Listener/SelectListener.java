@@ -169,7 +169,7 @@ public class SelectListener implements Listener {
             this.areaList.put(player.getName(), pointList);
         }
         pointList.add(new Point(x, y));
-        return pointList.size() + 1;
+        return pointList.size();
     }
 
     public boolean saveArea(Player player, String areaName) {
