@@ -24,6 +24,8 @@ import de.minestar.SinCity.Manager.AreaManager;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
 import de.minestar.SinCity.Units.SinCityPlayer;
+import de.minestar.core.MinestarCore;
+import de.minestar.core.units.MinestarGroup;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class GriefListener implements Listener {
@@ -42,6 +44,7 @@ public class GriefListener implements Listener {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
         boolean insideArea = this.areaManager.isInside(block.getWorld().getName(), block.getX(), block.getZ());
+        insideArea = insideArea && MinestarCore.getPlayer(player).getMinestarGroup().getLevel() > MinestarGroup.DEFAULT.getLevel();
 
         // CHECK FOR DENIAL
         if (!insideArea && this.dataManager.isInDenyAll(thisPlayer.getGroup(), block.getWorld().getName())) {
@@ -99,6 +102,7 @@ public class GriefListener implements Listener {
         SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
 
         boolean insideArea = this.areaManager.isInside(block.getWorld().getName(), block.getX(), block.getZ());
+        insideArea = insideArea && MinestarCore.getPlayer(player).getMinestarGroup().getLevel() > MinestarGroup.DEFAULT.getLevel();
 
         // CHECK FOR DENIAL
         if (!insideArea && this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
