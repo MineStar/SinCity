@@ -33,7 +33,7 @@ public class ChestBlock implements ISpecialBlock {
         x = block.getX();
         y = block.getY();
         z = block.getZ();
-        if (block.getTypeId() != Material.CHEST.getId()) {
+        if (!block.getType().equals(Material.CHEST)) {
             this.contents = null;
             return;
         }
@@ -60,7 +60,7 @@ public class ChestBlock implements ISpecialBlock {
         }
 
         Block block = world.getBlockAt(x, y, z);
-        if (block.getTypeId() != Material.CHEST.getId()) {
+        if (!block.getType().equals(Material.CHEST))  {
             return;
         }
 

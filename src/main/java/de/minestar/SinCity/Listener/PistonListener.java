@@ -35,7 +35,7 @@ public class PistonListener implements Listener {
             return;
 
         for (Block block : event.getBlocks()) {
-            if (block.getTypeId() == Material.GRAVEL.getId() || block.getTypeId() == Material.SAND.getId()) {
+            if (block.getType().equals(Material.GRAVEL) || block.getType().equals(Material.SAND)) {
                 event.setCancelled(true);
                 return;
             }
@@ -49,7 +49,7 @@ public class PistonListener implements Listener {
             return;
 
         Block block = event.getRetractLocation().getBlock();
-        if (block.getTypeId() == Material.GRAVEL.getId() || block.getTypeId() == Material.SAND.getId()) {
+        if (block.getType().equals(Material.GRAVEL) || block.getType().equals(Material.SAND)) {
             event.setCancelled(true);
             return;
         }

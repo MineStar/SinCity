@@ -107,10 +107,18 @@ public class GriefListener implements Listener {
         // CHECK FOR DENIAL
         if (!insideArea && this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
             // CHECK BLOCK
-            int ID = block.getTypeId();
-            if (ID == Material.DIODE_BLOCK_OFF.getId() || ID == Material.DIODE_BLOCK_ON.getId() || ID == Material.CHEST.getId() || ID == Material.DISPENSER.getId() || ID == Material.FURNACE.getId() || ID == Material.BURNING_FURNACE.getId()) {
-                ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht verändern.");
-                return true;
+            Material mat = block.getType();
+            switch (mat) {
+                case DIODE_BLOCK_ON :
+                case DIODE_BLOCK_OFF :
+                case CHEST :
+                case DISPENSER :
+                case FURNACE :
+                case BURNING_FURNACE :
+                    ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht verändern.");
+                    return true;
+                default :
+                    // do nothing
             }
         }
 

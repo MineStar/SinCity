@@ -33,7 +33,7 @@ public class DispenserBlock implements ISpecialBlock {
         x = block.getX();
         y = block.getY();
         z = block.getZ();
-        if (block.getTypeId() != Material.DISPENSER.getId()) {
+        if (!block.getType().equals(Material.DISPENSER))  {
             this.contents = null;
             return;
         }
@@ -60,7 +60,7 @@ public class DispenserBlock implements ISpecialBlock {
         }
 
         Block block = world.getBlockAt(x, y, z);
-        if (block.getTypeId() != Material.DISPENSER.getId()) {
+        if (!block.getType().equals(Material.DISPENSER))  {
             return;
         }
 

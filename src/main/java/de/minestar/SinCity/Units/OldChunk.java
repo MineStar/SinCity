@@ -58,20 +58,33 @@ public class OldChunk {
                     if (!blockList.contains(block.getTypeId())) {
                         continue;
                     }
-                    if (block.getTypeId() == Material.CHEST.getId()) {
-                        this.specialBlocks.add(new ChestBlock(block));
-                    } else if (block.getTypeId() == Material.WALL_SIGN.getId() || block.getTypeId() == Material.SIGN_POST.getId()) {
-                        this.specialBlocks.add(new SignBlock(block));
-                    } else if (block.getTypeId() == Material.FURNACE.getId() || block.getTypeId() == Material.BURNING_FURNACE.getId()) {
-                        this.specialBlocks.add(new FurnaceBlock(block));
-                    } else if (block.getTypeId() == Material.DISPENSER.getId()) {
-                        this.specialBlocks.add(new DispenserBlock(block));
-                    } else if (block.getTypeId() == Material.NOTE_BLOCK.getId()) {
-                        this.specialBlocks.add(new NoteBlock(block));
-                    } else if (block.getTypeId() == Material.JUKEBOX.getId()) {
-                        this.specialBlocks.add(new JukeBlock(block));
-                    } else if (block.getTypeId() == Material.SKULL.getId()) {
-                        this.specialBlocks.add(new SkullBlock(block));
+                    Material mat = block.getType();
+                    switch (mat) {
+                        case CHEST :
+                            this.specialBlocks.add(new ChestBlock(block));
+                            break;
+                        case WALL_SIGN :
+                        case SIGN_POST :
+                            this.specialBlocks.add(new SignBlock(block));
+                            break;
+                        case BURNING_FURNACE :
+                        case FURNACE :
+                            this.specialBlocks.add(new FurnaceBlock(block));
+                            break;
+                        case DISPENSER :
+                            this.specialBlocks.add(new DispenserBlock(block));
+                            break;
+                        case NOTE_BLOCK :
+                            this.specialBlocks.add(new NoteBlock(block));
+                            break;
+                        case JUKEBOX :
+                            this.specialBlocks.add(new JukeBlock(block));
+                            break;
+                        case SKULL :
+                            this.specialBlocks.add(new SkullBlock(block));
+                            break;
+                        default :
+                            // do nothing
                     }
                     block.setType(Material.AIR);
                 }

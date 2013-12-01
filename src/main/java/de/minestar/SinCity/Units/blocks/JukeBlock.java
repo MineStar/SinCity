@@ -32,9 +32,8 @@ public class JukeBlock implements ISpecialBlock {
         x = block.getX();
         y = block.getY();
         z = block.getZ();
-        if (block.getTypeId() != Material.JUKEBOX.getId()) {
+        if (!block.getType().equals(Material.JUKEBOX))
             return;
-        }
 
         Jukebox juke = (Jukebox) block.getState();
         this.playing = juke.getPlaying();
@@ -43,9 +42,8 @@ public class JukeBlock implements ISpecialBlock {
     @Override
     public void paste(World world) {
         Block block = world.getBlockAt(x, y, z);
-        if (block.getTypeId() != Material.JUKEBOX.getId()) {
+        if (!block.getType().equals(Material.JUKEBOX))
             return;
-        }
 
         Jukebox juke = (Jukebox) block.getState();
         juke.setPlaying(this.playing);

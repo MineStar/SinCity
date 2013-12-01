@@ -34,7 +34,8 @@ public class FurnaceBlock implements ISpecialBlock {
         x = block.getX();
         y = block.getY();
         z = block.getZ();
-        if (block.getTypeId() != Material.FURNACE.getId() && block.getTypeId() != Material.BURNING_FURNACE.getId()) {
+
+        if (!block.getType().equals(Material.FURNACE) && !block.getType().equals(Material.BURNING_FURNACE)) {
             this.contents = null;
             return;
         }
@@ -63,7 +64,7 @@ public class FurnaceBlock implements ISpecialBlock {
         }
 
         Block block = world.getBlockAt(x, y, z);
-        if (block.getTypeId() != Material.FURNACE.getId() && block.getTypeId() != Material.BURNING_FURNACE.getId()) {
+        if (!block.getType().equals(Material.FURNACE) && !block.getType().equals(Material.BURNING_FURNACE)) {
             return;
         }
 

@@ -32,7 +32,7 @@ public class SignBlock implements ISpecialBlock {
         x = block.getX();
         y = block.getY();
         z = block.getZ();
-        if (block.getTypeId() != Material.WALL_SIGN.getId() && block.getTypeId() != Material.SIGN_POST.getId()) {
+        if (!block.getType().equals(Material.WALL_SIGN) && !block.getType().equals(Material.SIGN_POST)) {
             this.contents = null;
             return;
         }
@@ -51,7 +51,7 @@ public class SignBlock implements ISpecialBlock {
         }
 
         Block block = world.getBlockAt(x, y, z);
-        if (block.getTypeId() != Material.WALL_SIGN.getId() && block.getTypeId() != Material.SIGN_POST.getId()) {
+        if (!block.getType().equals(Material.WALL_SIGN) && !block.getType().equals(Material.SIGN_POST)) {
             return;
         }
 

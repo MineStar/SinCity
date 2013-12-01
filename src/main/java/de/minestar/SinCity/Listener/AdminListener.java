@@ -23,7 +23,7 @@ public class AdminListener implements Listener {
         if (thisPlayer.getMinestarGroup().equals(MinestarGroup.ADMIN) && event.getEntity().getGameMode() != GameMode.ADVENTURE) {
             // 25 % Drop chance
             if (randomizer.nextInt(4) == 0) {
-                ItemStack bedrockStack = new ItemStack(Material.BEDROCK.getId());
+                ItemStack bedrockStack = new ItemStack(Material.BEDROCK);
                 bedrockStack.setAmount(1);
                 event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), bedrockStack);
             }

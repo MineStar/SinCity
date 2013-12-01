@@ -32,9 +32,8 @@ public class NoteBlock implements ISpecialBlock {
         x = block.getX();
         y = block.getY();
         z = block.getZ();
-        if (block.getTypeId() != Material.NOTE_BLOCK.getId()) {
+        if (!block.getType().equals(Material.NOTE_BLOCK))
             return;
-        }
 
         org.bukkit.block.NoteBlock noteBlock = (org.bukkit.block.NoteBlock) block.getState();
         this.note = noteBlock.getNote();
@@ -43,9 +42,8 @@ public class NoteBlock implements ISpecialBlock {
     @Override
     public void paste(World world) {
         Block block = world.getBlockAt(x, y, z);
-        if (block.getTypeId() != Material.NOTE_BLOCK.getId()) {
+        if (!block.getType().equals(Material.NOTE_BLOCK))
             return;
-        }
 
         org.bukkit.block.NoteBlock noteBlock = (org.bukkit.block.NoteBlock) block.getState();
         noteBlock.setNote(this.note);
