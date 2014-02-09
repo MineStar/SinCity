@@ -2,6 +2,7 @@ package de.minestar.SinCity.Listener;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,9 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -83,6 +86,60 @@ public class GriefListener implements Listener {
                     event.setCancelled(true);
                     return;
                 }
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onHangingBreakByEntity(HangingBreakByEntityEvent event) {
+        // Only handle ItemFrames & Paintings
+        if (!event.getEntity().getType().equals(EntityType.ITEM_FRAME) && !event.getEntity().getType().equals(EntityType.PAINTING)) {
+            return;
+        }
+        if (event.getRemover().getType().equals(EntityType.PLAYER)) {
+            // get the player
+            Player player = (Player) event.getRemover();
+            SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
+
+            // handle
+            if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onHangingInteract(PlayerInteractEntityEvent event) {
+        // Only handle ItemFrames & Paintings
+        if (!event.getRightClicked().getType().equals(EntityType.ITEM_FRAME) && !event.getRightClicked().getType().equals(EntityType.PAINTING)) {
+            return;
+        }
+
+        // handle
+        Player player = (Player) event.getPlayer();
+        SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
+
+        if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onHangingDamage(EntityDamageByEntityEvent event) {
+        Entity entity = event.getEntity();
+        Entity damager = event.getDamager();
+
+        // Only handle ItemFrames & Paintings
+        if (!entity.getType().equals(EntityType.ITEM_FRAME) && !entity.getType().equals(EntityType.PAINTING)) {
+            return;
+        }
+
+        if (damager.getType().equals(EntityType.PLAYER)) {
+            Player player = (Player) damager;
+            SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
+
+            if (this.dataManager.isInDenyAll(thisPlayer.getGroup(), player.getWorld().getName())) {
+                event.setCancelled(true);
             }
         }
     }
