@@ -32,7 +32,11 @@ public class AFKThread implements Runnable {
 
             // WHEN AFK TIMER IS REACHED AND (PLAYER HAS NOT MOVED OR IS INSIDE
             // A VEHICLE) (PREVENT ABUSE!)
-            if (maxAFKTime >= 0 && (!thisPlayer.hasMoved(player.getLocation()) || player.isInsideVehicle())) {
+            if (maxAFKTime >= 0) {
+                if (player.isInsideVehicle() || thisPlayer.hasMoved(player.getLocation())) {
+                    thisPlayer.setLastLocation(player.getLocation());
+                    return;
+                }
                 if (thisPlayer.isTooLongAFK(maxAFKTime)) {
                     ConsoleUtils.printInfo(Core.NAME, "Kicked '" + player.getName() + "' for being AFK!");
                     player.kickPlayer("Kicked being AFK!");
