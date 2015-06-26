@@ -1,5 +1,7 @@
 package de.minestar.SinCity.Threads;
 
+import java.util.Collection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -21,7 +23,7 @@ public class AFKThread implements Runnable {
 
     @Override
     public void run() {
-        Player[] players = Bukkit.getOnlinePlayers();
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         long maxAFKTime;
         SinCityPlayer thisPlayer;
         for (Player player : players) {

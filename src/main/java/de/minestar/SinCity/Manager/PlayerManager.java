@@ -1,5 +1,6 @@
 package de.minestar.SinCity.Manager;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class PlayerManager {
     // /////////////////////////////////////////////
 
     public void sendToOps(String message) {
-        Player[] players = Bukkit.getOnlinePlayers();
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         for (Player player : players) {
             // ONLY ONLINE
             if (!UtilPermissions.playerCanUseCommand(player, "sincity.isAdmin"))
@@ -44,7 +45,7 @@ public class PlayerManager {
 
     private void updateAll() {
         playerList = new ConcurrentHashMap<String, SinCityPlayer>();
-        Player[] players = Bukkit.getOnlinePlayers();
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         for (Player player : players) {
             this.addPlayer(player);
         }
