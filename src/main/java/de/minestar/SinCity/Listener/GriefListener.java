@@ -333,7 +333,7 @@ public class GriefListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void preventToolStacks(InventoryMoveItemEvent event) {
-        InventoryType destType = event.getInitiator().getType();
+        InventoryType destType = event.getDestination().getType();
         if (destType == InventoryType.ANVIL || destType == InventoryType.ENCHANTING) {
             ItemStack item = event.getItem();
             if (item == null) {
