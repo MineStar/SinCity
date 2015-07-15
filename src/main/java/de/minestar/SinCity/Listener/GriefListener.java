@@ -4,9 +4,11 @@ import java.util.HashSet;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,7 +16,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -332,14 +334,21 @@ public class GriefListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-    public void preventToolStacks(InventoryMoveItemEvent event) {
-        InventoryType destType = event.getDestination().getType();
+    public void preventToolStacks(InventoryClickEvent event) {
+        InventoryType destType = event.getInventory().getType();
         if (destType == InventoryType.ANVIL || destType == InventoryType.ENCHANTING) {
-            ItemStack item = event.getItem();
+            ItemStack item = event.getCurrentItem();
             if (item == null) {
                 return;
             }
+
             if (item.getAmount() > 1 && disallowedStacks.contains(item.getType().getId())) {
+                ItemStack stack = (CraftItemStack) item;
+                stack = (CraftItemStack) item.clone();
+                stack.setAmount(1);
+                event.getInventory().setItem(0, stack);
+                item.setAmount(item.getAmount() - 1);
+                event.setResult(Result.DENY);
                 event.setCancelled(true);
             }
         }
