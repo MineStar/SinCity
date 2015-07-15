@@ -1,5 +1,7 @@
 package de.minestar.SinCity.Listener;
 
+import java.util.HashSet;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -12,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -20,6 +23,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import de.minestar.SinCity.Core;
@@ -31,11 +35,65 @@ import de.minestar.core.MinestarCore;
 import de.minestar.core.units.MinestarGroup;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
+@SuppressWarnings("deprecation")
 public class GriefListener implements Listener {
 
     private final PlayerManager playerManager;
     private final DataManager dataManager;
     private final AreaManager areaManager;
+
+    private static HashSet<Integer> disallowedStacks = new HashSet<Integer>();
+    static {
+        // plates, leggings, helmets, boots
+        disallowedStacks.add(Material.IRON_BOOTS.getId());
+        disallowedStacks.add(Material.IRON_LEGGINGS.getId());
+        disallowedStacks.add(Material.IRON_CHESTPLATE.getId());
+        disallowedStacks.add(Material.IRON_HELMET.getId());
+        disallowedStacks.add(Material.GOLD_BOOTS.getId());
+        disallowedStacks.add(Material.GOLD_LEGGINGS.getId());
+        disallowedStacks.add(Material.GOLD_CHESTPLATE.getId());
+        disallowedStacks.add(Material.GOLD_HELMET.getId());
+        disallowedStacks.add(Material.DIAMOND_BOOTS.getId());
+        disallowedStacks.add(Material.DIAMOND_LEGGINGS.getId());
+        disallowedStacks.add(Material.DIAMOND_CHESTPLATE.getId());
+        disallowedStacks.add(Material.DIAMOND_HELMET.getId());
+        disallowedStacks.add(Material.LEATHER_BOOTS.getId());
+        disallowedStacks.add(Material.LEATHER_LEGGINGS.getId());
+        disallowedStacks.add(Material.LEATHER_CHESTPLATE.getId());
+        disallowedStacks.add(Material.LEATHER_HELMET.getId());
+        // horse
+        disallowedStacks.add(Material.SADDLE.getId());
+        disallowedStacks.add(Material.IRON_BARDING.getId());
+        disallowedStacks.add(Material.GOLD_BARDING.getId());
+        disallowedStacks.add(Material.DIAMOND_BARDING.getId());
+        // weapons
+        disallowedStacks.add(Material.BOW.getId());
+        // sword
+        disallowedStacks.add(Material.DIAMOND_SWORD.getId());
+        disallowedStacks.add(Material.GOLD_SWORD.getId());
+        disallowedStacks.add(Material.IRON_SWORD.getId());
+        disallowedStacks.add(Material.WOOD_SWORD.getId());
+        // axe
+        disallowedStacks.add(Material.DIAMOND_AXE.getId());
+        disallowedStacks.add(Material.GOLD_AXE.getId());
+        disallowedStacks.add(Material.IRON_AXE.getId());
+        disallowedStacks.add(Material.WOOD_AXE.getId());
+        // spade
+        disallowedStacks.add(Material.DIAMOND_SPADE.getId());
+        disallowedStacks.add(Material.GOLD_SPADE.getId());
+        disallowedStacks.add(Material.IRON_SPADE.getId());
+        disallowedStacks.add(Material.WOOD_SPADE.getId());
+        // pickaxe
+        disallowedStacks.add(Material.DIAMOND_PICKAXE.getId());
+        disallowedStacks.add(Material.GOLD_PICKAXE.getId());
+        disallowedStacks.add(Material.IRON_PICKAXE.getId());
+        disallowedStacks.add(Material.WOOD_PICKAXE.getId());
+        // hoe
+        disallowedStacks.add(Material.DIAMOND_HOE.getId());
+        disallowedStacks.add(Material.GOLD_HOE.getId());
+        disallowedStacks.add(Material.IRON_HOE.getId());
+        disallowedStacks.add(Material.WOOD_HOE.getId());
+    }
 
     public GriefListener(DataManager dataManager, PlayerManager playerManager, AreaManager areaManager) {
         this.dataManager = dataManager;
@@ -269,6 +327,20 @@ public class GriefListener implements Listener {
                         this.playerManager.sendToOps("'" + attacker.getName() + "' betreibt PVP an '" + event.getEntity().getType().name() + "'.");
                     }
                 }
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void preventToolStacks(InventoryMoveItemEvent event) {
+        InventoryType destType = event.getInitiator().getType();
+        if (destType == InventoryType.ANVIL || destType == InventoryType.ENCHANTING) {
+            ItemStack item = event.getItem();
+            if (item == null) {
+                return;
+            }
+            if (item.getAmount() > 1 && disallowedStacks.contains(item.getType().getId())) {
+                event.setCancelled(true);
             }
         }
     }
