@@ -8,7 +8,6 @@ import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,6 +44,7 @@ public class GriefListener implements Listener {
     private final AreaManager areaManager;
 
     private static HashSet<Integer> disallowedStacks = new HashSet<Integer>();
+
     static {
         // plates, leggings, helmets, boots
         disallowedStacks.add(Material.IRON_BOOTS.getId());
@@ -346,10 +346,8 @@ public class GriefListener implements Listener {
                 ItemStack stack = (CraftItemStack) item;
                 stack = (CraftItemStack) item.clone();
                 stack.setAmount(1);
-                event.getInventory().setItem(0, stack);
                 item.setAmount(item.getAmount() - 1);
-                event.setResult(Result.DENY);
-                event.setCancelled(true);
+                event.setCurrentItem(stack);
             }
         }
     }
