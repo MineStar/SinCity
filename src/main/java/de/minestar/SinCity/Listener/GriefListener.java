@@ -4,7 +4,6 @@ import java.util.HashSet;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -17,6 +16,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -337,17 +337,15 @@ public class GriefListener implements Listener {
     public void preventToolStacks(InventoryClickEvent event) {
         InventoryType destType = event.getInventory().getType();
         if (destType == InventoryType.ANVIL || destType == InventoryType.ENCHANTING) {
-            ItemStack item = event.getCurrentItem();
-            if (item == null) {
-                return;
-            }
+            if (event.getSlotType() == SlotType.QUICKBAR || event.getSlotType() == SlotType.CONTAINER) {
+                ItemStack item = event.getCurrentItem();
+                if (item == null) {
+                    return;
+                }
 
-            if (item.getAmount() > 1 && disallowedStacks.contains(item.getType().getId())) {
-                ItemStack stack = (CraftItemStack) item;
-                stack = (CraftItemStack) item.clone();
-                stack.setAmount(1);
-                item.setAmount(item.getAmount() - 1);
-                event.setCurrentItem(stack);
+                if (item.getAmount() > 1 && disallowedStacks.contains(item.getType().getId())) {
+                    event.setCancelled(true);
+                }
             }
         }
     }
