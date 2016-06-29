@@ -44,7 +44,7 @@ public class OldChunk {
 
     private ArrayList<ISpecialBlock> specialBlocks = new ArrayList<ISpecialBlock>();
 
-    private static HashSet<Integer> blockList = new HashSet<Integer>(Arrays.asList(Material.CHEST.getId(), Material.SKULL.getId(), Material.JUKEBOX.getId(), Material.NOTE_BLOCK.getId(), Material.DISPENSER.getId(), Material.WALL_SIGN.getId(), Material.SIGN_POST.getId(), Material.BURNING_FURNACE.getId(), Material.FURNACE.getId()));
+    private static HashSet<Material> blockList = new HashSet<Material>(Arrays.asList(Material.CHEST, Material.SKULL, Material.JUKEBOX, Material.NOTE_BLOCK, Material.DISPENSER, Material.WALL_SIGN, Material.SIGN_POST, Material.BURNING_FURNACE, Material.FURNACE));
 
     public OldChunk(Chunk chunk) {
         this.coordinates = new ChunkCoordinates(chunk.getX(), chunk.getZ());
@@ -55,7 +55,7 @@ public class OldChunk {
             for (int z = 0; z < 16; z++) {
                 for (int y = 0; y < 256; y++) {
                     block = chunk.getBlock(x, y, z);
-                    if (!blockList.contains(block.getTypeId())) {
+                    if (!blockList.contains(block.getType())) {
                         continue;
                     }
                     Material mat = block.getType();

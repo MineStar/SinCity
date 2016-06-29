@@ -1,7 +1,7 @@
 package de.minestar.SinCity;
 
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.scheduler.BukkitScheduler;
+//import org.bukkit.scheduler.BukkitScheduler;
 
 import de.minestar.SinCity.Commands.AddCornerCommand;
 import de.minestar.SinCity.Commands.BiomeCommand;
@@ -11,16 +11,16 @@ import de.minestar.SinCity.Commands.PartRegenCommand;
 import de.minestar.SinCity.Commands.RegenCommand;
 import de.minestar.SinCity.Commands.SaveAreaCommand;
 import de.minestar.SinCity.Commands.SelectCommand;
-import de.minestar.SinCity.Listener.AFKListener;
+//import de.minestar.SinCity.Listener.AFKListener;
 import de.minestar.SinCity.Listener.AdminListener;
 import de.minestar.SinCity.Listener.ConnectionListener;
 import de.minestar.SinCity.Listener.GriefListener;
-import de.minestar.SinCity.Listener.PistonListener;
+//import de.minestar.SinCity.Listener.PistonListener;
 import de.minestar.SinCity.Listener.SelectListener;
 import de.minestar.SinCity.Manager.AreaManager;
 import de.minestar.SinCity.Manager.DataManager;
 import de.minestar.SinCity.Manager.PlayerManager;
-import de.minestar.SinCity.Threads.AFKThread;
+//import de.minestar.SinCity.Threads.AFKThread;
 import de.minestar.minestarlibrary.AbstractCore;
 import de.minestar.minestarlibrary.commands.CommandList;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
@@ -39,17 +39,17 @@ public class Core extends AbstractCore {
     /**
      * Threads
      */
-    private AFKThread afkThread;
+    //private AFKThread afkThread;
 
     /**
      * Listener
      */
-    private AFKListener afkListener;
+    //private AFKListener afkListener;
     private AdminListener adminListener;
     private GriefListener griefListener;
     private ConnectionListener connectionListener;
     private SelectListener selectListener;
-    private PistonListener pistonListener;
+    //private PistonListener pistonListener;
 
     public Core() {
         this("SinCity");
@@ -71,12 +71,12 @@ public class Core extends AbstractCore {
 
     @Override
     public boolean createListener() {
-        this.afkListener = new AFKListener(this.playerManager);
+        //this.afkListener = new AFKListener(this.playerManager);
         this.adminListener = new AdminListener();
         this.griefListener = new GriefListener(this.dataManager, this.playerManager, this.areaManager);
         this.connectionListener = new ConnectionListener(this.playerManager);
         this.selectListener = new SelectListener(this.areaManager);
-        this.pistonListener = new PistonListener();
+        //this.pistonListener = new PistonListener();
         return true;
     }
 
@@ -98,26 +98,30 @@ public class Core extends AbstractCore {
         return true;
     }
 
+    /*
     @Override
     public boolean createThreads() {
         this.afkThread = new AFKThread(this.dataManager, this.playerManager);
         return true;
     }
+    */
 
     @Override
     protected boolean registerEvents(PluginManager pm) {
-        pm.registerEvents(this.afkListener, this);
+        //pm.registerEvents(this.afkListener, this);
         pm.registerEvents(this.adminListener, this);
         pm.registerEvents(this.griefListener, this);
         pm.registerEvents(this.connectionListener, this);
         pm.registerEvents(this.selectListener, this);
-        pm.registerEvents(this.pistonListener, this);
+        //pm.registerEvents(this.pistonListener, this);
         return true;
     }
 
+    /*
     @Override
     protected boolean startThreads(BukkitScheduler scheduler) {
         scheduler.scheduleSyncRepeatingTask(this, this.afkThread, 15 * 20, 15 * 20);
         return true;
     }
+    */
 }
