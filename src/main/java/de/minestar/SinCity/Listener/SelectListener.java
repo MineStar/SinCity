@@ -106,7 +106,7 @@ public class SelectListener implements Listener {
         Player player = event.getPlayer();
 
         // WE NEED AN WOOD-PICKAXE IN OUR HANDS
-        if (player.getItemInHand() != null && player.getItemInHand().getType().equals(Material.STICK) && player.isOp()) {
+        if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType().equals(Material.STICK) && player.isOp()) {
             if (event.getClickedBlock() != null && event.getClickedBlock().getType().equals(Material.MOB_SPAWNER)) {
                 CreatureSpawner spawner = (CreatureSpawner) event.getClickedBlock().getState();
                 EntityType current = spawner.getSpawnedType();
@@ -130,7 +130,7 @@ public class SelectListener implements Listener {
         }
 
         // WE NEED AN WOOD-PICKAXE IN OUR HANDS
-        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.WOOD_PICKAXE))
+        if (player.getInventory().getItemInMainHand() == null || player.getInventory().getItemInMainHand().getType().equals(Material.WOOD_PICKAXE))
             return;
 
         // CANCEL THE EVENT
