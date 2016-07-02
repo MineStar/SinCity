@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -76,9 +77,7 @@ public class SelectListener implements Listener {
 
         BiomeData data = this.getBiomeData(event.getPlayer().getName());
         if (data != null && event.getPlayer().isOp()) {
-            HashSet<Byte> hashset = new HashSet<Byte>();
-            hashset.add((byte) 0);
-            Location location = event.getPlayer().getLineOfSight(hashset, 200).get(0).getLocation();
+            Location location = event.getPlayer().getTargetBlock((Set<Material>) null, 200).getLocation();
             if (location != null) {
                 BiomeHelper.convertBiome(event.getPlayer(), location, data.getBiome(), data.getRadius());
             } else {

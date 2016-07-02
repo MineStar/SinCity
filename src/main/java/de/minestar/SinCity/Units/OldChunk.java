@@ -31,6 +31,7 @@ import org.bukkit.block.Block;
 
 import de.minestar.SinCity.Units.blocks.ChestBlock;
 import de.minestar.SinCity.Units.blocks.DispenserBlock;
+import de.minestar.SinCity.Units.blocks.DropperBlock;
 import de.minestar.SinCity.Units.blocks.FurnaceBlock;
 import de.minestar.SinCity.Units.blocks.ISpecialBlock;
 import de.minestar.SinCity.Units.blocks.JukeBlock;
@@ -44,7 +45,7 @@ public class OldChunk {
 
     private ArrayList<ISpecialBlock> specialBlocks = new ArrayList<ISpecialBlock>();
 
-    private static HashSet<Material> blockList = new HashSet<Material>(Arrays.asList(Material.CHEST, Material.SKULL, Material.JUKEBOX, Material.NOTE_BLOCK, Material.DISPENSER, Material.WALL_SIGN, Material.SIGN_POST, Material.BURNING_FURNACE, Material.FURNACE));
+    private static HashSet<Material> blockList = new HashSet<Material>(Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST, Material.SKULL, Material.JUKEBOX, Material.NOTE_BLOCK, Material.DISPENSER, Material.DROPPER, Material.WALL_SIGN, Material.SIGN_POST, Material.BURNING_FURNACE, Material.FURNACE));
 
     public OldChunk(Chunk chunk) {
         this.coordinates = new ChunkCoordinates(chunk.getX(), chunk.getZ());
@@ -61,6 +62,7 @@ public class OldChunk {
                     Material mat = block.getType();
                     switch (mat) {
                         case CHEST :
+                        case TRAPPED_CHEST:
                             this.specialBlocks.add(new ChestBlock(block));
                             break;
                         case WALL_SIGN :
@@ -73,6 +75,9 @@ public class OldChunk {
                             break;
                         case DISPENSER :
                             this.specialBlocks.add(new DispenserBlock(block));
+                            break;
+                        case DROPPER :
+                            this.specialBlocks.add(new DropperBlock(block));
                             break;
                         case NOTE_BLOCK :
                             this.specialBlocks.add(new NoteBlock(block));
