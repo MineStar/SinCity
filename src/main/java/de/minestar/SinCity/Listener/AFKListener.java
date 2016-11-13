@@ -38,7 +38,7 @@ public class AFKListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (player.getItemInHand() != null && player.getItemInHand().getType().equals(Material.FISHING_ROD) && (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
+        if (player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getType().equals(Material.FISHING_ROD) && (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
             SinCityPlayer thisPlayer = this.playerManager.getPlayer(player);
             thisPlayer.setLastLocation(player.getLocation());
         }

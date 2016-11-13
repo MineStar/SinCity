@@ -31,6 +31,7 @@ import org.bukkit.block.Block;
 
 import de.minestar.SinCity.Units.blocks.ChestBlock;
 import de.minestar.SinCity.Units.blocks.DispenserBlock;
+import de.minestar.SinCity.Units.blocks.DropperBlock;
 import de.minestar.SinCity.Units.blocks.FurnaceBlock;
 import de.minestar.SinCity.Units.blocks.ISpecialBlock;
 import de.minestar.SinCity.Units.blocks.JukeBlock;
@@ -44,7 +45,7 @@ public class OldChunk {
 
     private ArrayList<ISpecialBlock> specialBlocks = new ArrayList<ISpecialBlock>();
 
-    private static HashSet<Integer> blockList = new HashSet<Integer>(Arrays.asList(Material.CHEST.getId(), Material.SKULL.getId(), Material.JUKEBOX.getId(), Material.NOTE_BLOCK.getId(), Material.DISPENSER.getId(), Material.WALL_SIGN.getId(), Material.SIGN_POST.getId(), Material.BURNING_FURNACE.getId(), Material.FURNACE.getId()));
+    private static HashSet<Material> blockList = new HashSet<Material>(Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST, Material.SKULL, Material.JUKEBOX, Material.NOTE_BLOCK, Material.DISPENSER, Material.DROPPER, Material.WALL_SIGN, Material.SIGN_POST, Material.BURNING_FURNACE, Material.FURNACE));
 
     public OldChunk(Chunk chunk) {
         this.coordinates = new ChunkCoordinates(chunk.getX(), chunk.getZ());
@@ -55,12 +56,13 @@ public class OldChunk {
             for (int z = 0; z < 16; z++) {
                 for (int y = 0; y < 256; y++) {
                     block = chunk.getBlock(x, y, z);
-                    if (!blockList.contains(block.getTypeId())) {
+                    if (!blockList.contains(block.getType())) {
                         continue;
                     }
                     Material mat = block.getType();
                     switch (mat) {
                         case CHEST :
+                        case TRAPPED_CHEST:
                             this.specialBlocks.add(new ChestBlock(block));
                             break;
                         case WALL_SIGN :
@@ -73,6 +75,9 @@ public class OldChunk {
                             break;
                         case DISPENSER :
                             this.specialBlocks.add(new DispenserBlock(block));
+                            break;
+                        case DROPPER :
+                            this.specialBlocks.add(new DropperBlock(block));
                             break;
                         case NOTE_BLOCK :
                             this.specialBlocks.add(new NoteBlock(block));

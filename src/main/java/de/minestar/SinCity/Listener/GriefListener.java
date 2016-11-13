@@ -36,65 +36,64 @@ import de.minestar.core.MinestarCore;
 import de.minestar.core.units.MinestarGroup;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
-@SuppressWarnings("deprecation")
 public class GriefListener implements Listener {
 
     private final PlayerManager playerManager;
     private final DataManager dataManager;
     private final AreaManager areaManager;
 
-    private static HashSet<Integer> disallowedStacks = new HashSet<Integer>();
+    private static HashSet<Material> disallowedStacks = new HashSet<Material>();
 
     static {
         // plates, leggings, helmets, boots
-        disallowedStacks.add(Material.IRON_BOOTS.getId());
-        disallowedStacks.add(Material.IRON_LEGGINGS.getId());
-        disallowedStacks.add(Material.IRON_CHESTPLATE.getId());
-        disallowedStacks.add(Material.IRON_HELMET.getId());
-        disallowedStacks.add(Material.GOLD_BOOTS.getId());
-        disallowedStacks.add(Material.GOLD_LEGGINGS.getId());
-        disallowedStacks.add(Material.GOLD_CHESTPLATE.getId());
-        disallowedStacks.add(Material.GOLD_HELMET.getId());
-        disallowedStacks.add(Material.DIAMOND_BOOTS.getId());
-        disallowedStacks.add(Material.DIAMOND_LEGGINGS.getId());
-        disallowedStacks.add(Material.DIAMOND_CHESTPLATE.getId());
-        disallowedStacks.add(Material.DIAMOND_HELMET.getId());
-        disallowedStacks.add(Material.LEATHER_BOOTS.getId());
-        disallowedStacks.add(Material.LEATHER_LEGGINGS.getId());
-        disallowedStacks.add(Material.LEATHER_CHESTPLATE.getId());
-        disallowedStacks.add(Material.LEATHER_HELMET.getId());
+        disallowedStacks.add(Material.IRON_BOOTS);
+        disallowedStacks.add(Material.IRON_LEGGINGS);
+        disallowedStacks.add(Material.IRON_CHESTPLATE);
+        disallowedStacks.add(Material.IRON_HELMET);
+        disallowedStacks.add(Material.GOLD_BOOTS);
+        disallowedStacks.add(Material.GOLD_LEGGINGS);
+        disallowedStacks.add(Material.GOLD_CHESTPLATE);
+        disallowedStacks.add(Material.GOLD_HELMET);
+        disallowedStacks.add(Material.DIAMOND_BOOTS);
+        disallowedStacks.add(Material.DIAMOND_LEGGINGS);
+        disallowedStacks.add(Material.DIAMOND_CHESTPLATE);
+        disallowedStacks.add(Material.DIAMOND_HELMET);
+        disallowedStacks.add(Material.LEATHER_BOOTS);
+        disallowedStacks.add(Material.LEATHER_LEGGINGS);
+        disallowedStacks.add(Material.LEATHER_CHESTPLATE);
+        disallowedStacks.add(Material.LEATHER_HELMET);
         // horse
-        disallowedStacks.add(Material.SADDLE.getId());
-        disallowedStacks.add(Material.IRON_BARDING.getId());
-        disallowedStacks.add(Material.GOLD_BARDING.getId());
-        disallowedStacks.add(Material.DIAMOND_BARDING.getId());
+        disallowedStacks.add(Material.SADDLE);
+        disallowedStacks.add(Material.IRON_BARDING);
+        disallowedStacks.add(Material.GOLD_BARDING);
+        disallowedStacks.add(Material.DIAMOND_BARDING);
         // weapons
-        disallowedStacks.add(Material.BOW.getId());
+        disallowedStacks.add(Material.BOW);
         // sword
-        disallowedStacks.add(Material.DIAMOND_SWORD.getId());
-        disallowedStacks.add(Material.GOLD_SWORD.getId());
-        disallowedStacks.add(Material.IRON_SWORD.getId());
-        disallowedStacks.add(Material.WOOD_SWORD.getId());
+        disallowedStacks.add(Material.DIAMOND_SWORD);
+        disallowedStacks.add(Material.GOLD_SWORD);
+        disallowedStacks.add(Material.IRON_SWORD);
+        disallowedStacks.add(Material.WOOD_SWORD);
         // axe
-        disallowedStacks.add(Material.DIAMOND_AXE.getId());
-        disallowedStacks.add(Material.GOLD_AXE.getId());
-        disallowedStacks.add(Material.IRON_AXE.getId());
-        disallowedStacks.add(Material.WOOD_AXE.getId());
+        disallowedStacks.add(Material.DIAMOND_AXE);
+        disallowedStacks.add(Material.GOLD_AXE);
+        disallowedStacks.add(Material.IRON_AXE);
+        disallowedStacks.add(Material.WOOD_AXE);
         // spade
-        disallowedStacks.add(Material.DIAMOND_SPADE.getId());
-        disallowedStacks.add(Material.GOLD_SPADE.getId());
-        disallowedStacks.add(Material.IRON_SPADE.getId());
-        disallowedStacks.add(Material.WOOD_SPADE.getId());
+        disallowedStacks.add(Material.DIAMOND_SPADE);
+        disallowedStacks.add(Material.GOLD_SPADE);
+        disallowedStacks.add(Material.IRON_SPADE);
+        disallowedStacks.add(Material.WOOD_SPADE);
         // pickaxe
-        disallowedStacks.add(Material.DIAMOND_PICKAXE.getId());
-        disallowedStacks.add(Material.GOLD_PICKAXE.getId());
-        disallowedStacks.add(Material.IRON_PICKAXE.getId());
-        disallowedStacks.add(Material.WOOD_PICKAXE.getId());
+        disallowedStacks.add(Material.DIAMOND_PICKAXE);
+        disallowedStacks.add(Material.GOLD_PICKAXE);
+        disallowedStacks.add(Material.IRON_PICKAXE);
+        disallowedStacks.add(Material.WOOD_PICKAXE);
         // hoe
-        disallowedStacks.add(Material.DIAMOND_HOE.getId());
-        disallowedStacks.add(Material.GOLD_HOE.getId());
-        disallowedStacks.add(Material.IRON_HOE.getId());
-        disallowedStacks.add(Material.WOOD_HOE.getId());
+        disallowedStacks.add(Material.DIAMOND_HOE);
+        disallowedStacks.add(Material.GOLD_HOE);
+        disallowedStacks.add(Material.IRON_HOE);
+        disallowedStacks.add(Material.WOOD_HOE);
     }
 
     public GriefListener(DataManager dataManager, PlayerManager playerManager, AreaManager areaManager) {
@@ -232,7 +231,7 @@ public class GriefListener implements Listener {
                 case DISPENSER :
                 case FURNACE :
                 case BURNING_FURNACE :
-                    ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht verändern.");
+                    ChatUtils.writeError(player, Core.NAME, "Du kannst hier nicht verï¿½ndern.");
                     return true;
                 default :
                     // do nothing
@@ -343,7 +342,7 @@ public class GriefListener implements Listener {
                     return;
                 }
 
-                if (item.getAmount() > 1 && disallowedStacks.contains(item.getType().getId())) {
+                if (item.getAmount() > 1 && disallowedStacks.contains(item.getType())) {
                     event.setCancelled(true);
                 }
             }

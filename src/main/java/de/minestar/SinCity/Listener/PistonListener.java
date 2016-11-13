@@ -48,10 +48,11 @@ public class PistonListener implements Listener {
         if (event.isCancelled())
             return;
 
-        Block block = event.getRetractLocation().getBlock();
-        if (block.getType().equals(Material.GRAVEL) || block.getType().equals(Material.SAND)) {
-            event.setCancelled(true);
-            return;
+        for (Block block : event.getBlocks()) {
+            if (block.getType().equals(Material.GRAVEL) || block.getType().equals(Material.SAND)) {
+                event.setCancelled(true);
+                return;
+            }
         }
     }
 }
